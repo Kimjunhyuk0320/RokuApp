@@ -1,19 +1,49 @@
-' entry point of  MainScene
+' Entry point of MainScene
 sub Init()
     ' set background color for scene. Applied only if backgroundUri has empty value
     m.top.backgroundColor = "0x662D91"
-    m.top.backgroundUri= "pkg:/images/background.jpeg"
+    m.top.backgroundUri = "pkg:/images/background.jpeg"
+    m.splashText = m.top.FindNode("splashText")
+    m.splashText.text = "Terms of service" ' Set your desired text content here
+    ' Optional: Adjust other properties of m.splashText if needed (e.g., m.splashText.scrollSpeed = 30)
+    ' Add other initialization code as necessary
+    ' set initial visibility
 
-    ' add back if you want to use specific background image
-    ' m.top.backgroundUri= "pkg:/images/background.png"
-    m.loadingIndicator = m.top.FindNode("loadingIndicator") ' store loadingIndicator node to m
+    m.loadingIndicator = m.top.FindNode("loadingIndicator")
+    
+    m.overhang = m.top.FindNode("overhang")
+    m.goalLabel = m.top.FindNode("goalLabel")
+    
+    m.counter = m.top.FindNode("counter")
+    
+    m.ring = m.top.FindNode("ring")
+
+    ' Initialize and start the timer
+    m.splashTimer = m.top.FindNode("splashTimer")
+    m.splashTimer.ObserveField("fire", "OnSplashTimerFire")
+    m.splashTimer.control = "start"
+    
+end sub
+
+' Timer event handler
+sub OnSplashTimerFire()
     InitScreenStack()
     ShowGridScreen()
     RunContentTask() ' retrieving content
+    ' hide the splash text
+    m.splashText.visible = false
+    
+    ' show other UI elements
+    m.overhang.visible = true
+    m.goalLabel.visible = true
+    m.counter.visible = true
+    m.ring.visible = true
+
+    ' You can add additional initialization code here if needed
 end sub
 
 ' The OnKeyEvent() function receives remote control key events
-function OnkeyEvent(key as String, press as Boolean) as Boolean
+function OnKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press
         ' handle "back" key press

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <component name="MainScene" extends="Scene">
     <script type="text/brightscript" uri="MainScene.brs" />
     <script type="text/brightscript" uri="UILogic/ScreenStackLogic.brs" />
@@ -7,12 +6,27 @@
     <script type="text/brightscript" uri="UILogic/GridScreenLogic.brs" />
     <script type="text/brightscript" uri="UILogic/VideoPlayerLogic.brs" />
     <children>
-         
-         <Overhang
+        <Label
+            id="splashText"
+            translation="[0, 0]"
+            width="1280"
+            height="720"
+            horizAlign="center"
+            vertAlign="center"
+            color="0xFFFFFFFF"
+        />
+
+        <Timer
+            id="splashTimer"
+            duration="6"
+            repeat="false"
+        />
+        <Overhang
             id="overhang"
             showOptions="false"
             showClock="false"
             logoUri="pkg:/images/logo.png"
+            visible="false"
             translation="[0,20]"
         />
         <Label
@@ -26,15 +40,8 @@
             visible="false"
             font="font:MediumBoldSystemFont"
         />
-
-        
-        <Label id="goalLabel" text="Daily Calorie Goal: 5000" color="0xed412bff" visible="true" translation="[700,110]" font="font:MediumBoldSystemFont"/>
-        <Label id="counter" text="0" visible="true" translation="[1090,110]" horizAlign="center" vertAlign="center" font="font:MediumBoldSystemFont"/>
-        <Button id="ring" text=" " textColor="0xff0000ff" iconUri="pkg:/images/ring/0.png" focusedTextColor="0xff0000ff" width="40" height="40" translation="[1000, 100]" visible="true"/>
-        
-
-        
-
+        <Label id="goalLabel" text="Daily Calorie Goal: 5000" color="0xed412bff" visible="false" translation="[700,110]" font="font:MediumBoldSystemFont"/>
+        <Label id="counter" text="0" visible="false" translation="[1065,110]" horizAlign="left" vertAlign="left" font="font:MediumBoldSystemFont"/>
+        <Button id="ring" text=" " textColor="0xff0000ff" iconUri="pkg:/images/ring/0.png" focusedTextColor="0xff0000ff" width="40" height="40" translation="[1000, 100]" visible="false"/>
     </children>
 </component>
-
