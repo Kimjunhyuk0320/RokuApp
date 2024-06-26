@@ -29,9 +29,19 @@ end sub
 
 sub OnVideoPlayerStateChange() ' invoked when video state is changed
     state = m.videoPlayer.state
+    label = m.top.FindNode("counter")
+    caloriesBurned = label.text.ToInt()
+    calorieGoal = 5000
+    barPercent = (caloriesBurned * 100) / calorieGoal
+
+
     ' close video screen in case of error or end of playback
     if state = "error" or state = "finished"
+        print "closeVideoScreen"
         CloseScreen(m.videoPlayer)
+        if barPercent >= 100
+            print "Today complete"
+        end if
     end if
 end sub
 

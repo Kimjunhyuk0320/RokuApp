@@ -1,6 +1,7 @@
 ' Entry point of MainScene
 sub Init()
     ' set background color for scene. Applied only if backgroundUri has empty value
+    m.goalAchievedShown = false
     m.top.backgroundColor = "0x662D91"
     m.top.backgroundUri = "pkg:/images/background.jpeg"
     m.splashText = m.top.FindNode("splashText")
@@ -42,17 +43,51 @@ sub OnSplashTimerFire()
     ' You can add additional initialization code here if needed
 end sub
 
-' The OnKeyEvent() function receives remote control key events
+function CreateGoalAchievedScreen() as Object
+    ' Create a new screen node (assuming it's a rectangle node for example)
+    screenNode = CreateObject("roSGNode", "Rectangle")
+    screenNode.width = "1920" ' Set appropriate width
+    screenNode.height = "1080" ' Set appropriate height
+    screenNode.color = "0x000000" ' Set background color
+
+    ' Add text node for displaying goal achievement message
+    textNode = CreateObject("roSGNode", "Label")
+    textNode.text = "Congratulations! Goal Achieved!"
+    textNode.translation = [960, 540] ' Position at the center of the screen
+    textNode.font.size = 36
+    textNode.font.color = "0xFFFFFF"
+
+    ' Add the text node as a child of the screen node
+    screenNode.appendChild(textNode)
+
+    ' You can add more UI elements or logic here as needed
+
+    return screenNode
+end function
+
 function OnKeyEvent(key as String, press as Boolean) as Boolean
     result = false
+    label = m.top.FindNode("counter")
+    caloriesBurned = label.text.ToInt()
+    calorieGoal = 5000
+    barPercent = (caloriesBurned * 100) / calorieGoal
     if press
         ' handle "back" key press
         if key = "back"
+            print "close Screen!!"
+            print caloriesBurned.ToStr()
             numberOfScreens = m.screenStack.Count()
             ' close top screen if there are two or more screens in the screen stack
             if numberOfScreens > 1
                 CloseScreen(invalid)
                 result = true
+
+                if barPercent >= 100 and not m.goalAchievedShown
+                    ' Create a new screen for goal achievement
+                    newNode = CreateGoalAchievedScreen()
+                    ShowScreen(newNode) ' Show the goal achieved screen
+                    m.goalAchievedShown = true ' Set the toggle variable to true
+                end if
             end if
         end if
     end if
