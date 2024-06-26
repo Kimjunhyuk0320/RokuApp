@@ -44,25 +44,8 @@ sub OnSplashTimerFire()
 end sub
 
 function CreateGoalAchievedScreen() as Object
-    ' Create a new screen node (assuming it's a rectangle node for example)
-    screenNode = CreateObject("roSGNode", "Rectangle")
-    screenNode.width = "1920" ' Set appropriate width
-    screenNode.height = "1080" ' Set appropriate height
-    screenNode.color = "0x000000" ' Set background color
-
-    ' Add text node for displaying goal achievement message
-    textNode = CreateObject("roSGNode", "Label")
-    textNode.text = "Congratulations! Goal Achieved!"
-    textNode.translation = [960, 540] ' Position at the center of the screen
-    textNode.font.size = 36
-    textNode.font.color = "0xFFFFFF"
-
-    ' Add the text node as a child of the screen node
-    screenNode.appendChild(textNode)
-
-    ' You can add more UI elements or logic here as needed
-
-    return screenNode
+    m.GoalAchievedScreen = CreateObject("roSGNode", "GoalAchievedScreen")
+    return m.GoalAchievedScreen
 end function
 
 function OnKeyEvent(key as String, press as Boolean) as Boolean
